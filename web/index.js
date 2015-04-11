@@ -21,8 +21,16 @@ app.use(express.static(__dirname + '/public'));
 var usernames = {};
 var numUsers = 0;
 
+function sendCounts(socket) {
+    socket.broadcast.emit('updated_count', {
+      yes: yes,
+      no: no
+    });
+}
+
 io.on('connection', function (socket) {
   var addedUser = false;
+  socket.emit('updated_count', {yes : yes, no : no});
 
   // when the client emits 'new message', this listens and executes
   socket.on('new message', function (data) {
@@ -57,11 +65,7 @@ io.on('connection', function (socket) {
     } else {
       no += 1;
     }
-    console.log(yes, no);
-    socket.broadcast.emit('updated_count', {
-      yes: yes,
-      no: no
-    });
+    sendCounts(socket);
   });
 
   // when the client emits 'typing', we broadcast it to others

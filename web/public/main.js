@@ -23,14 +23,17 @@ $(function() {
     vote(false);
   })
 
-  var $yes_display = $('.yes.count');
-  var $no_display = $('.no.count');
+  var $yes_display = $('#no_display');
+  console.log($yes_display);
+  var $no_display = $('#yes_display');
 
   // Prompt for setting a username
   var username;
   var connected = false;
   var typing = false;
   var lastTypingTime;
+  var yes_count = 0;
+  var no_count = 0;
 
   var socket = io();
 
@@ -60,6 +63,14 @@ $(function() {
   }
 
   function vote(val) {
+    if (val) {
+      yes_count++;
+      $yes_display.text(yes_count);
+    } else {
+      no_count++;
+      $no_display.text(no_count);
+    }
+
     socket.emit('vote', val);
   }
 
@@ -269,8 +280,10 @@ $(function() {
   });
 
   socket.on('updated_count', function (counts) {
-    log('counts');
-    $yes_display.innerHTML = counts.yes;
-    $no_display.innerHTML = counts.no;
+    yes_count = counts.yes;
+    no_count = counts.no;
+
+    $yes_display.text(yes_count);
+    $no_display.text(no_count);
   });
 });
