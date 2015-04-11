@@ -148,3 +148,29 @@ ul {
   right: 0;
   width: 100%;
 }
+
+button {
+  padding: 8px 14px;
+}
+
+.container {
+  width: 850px;
+  margin: 20px auto 0 auto;
+  text-align: center;
+}
+
+.gauge {
+  width: 150px;
+  height: 150px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  margin: 5px;
+}
+
+a:link.button,
+a:active.button,
+a:visited.button,
+a:hover.button {
+  margin: 20px 5px 0 2px;
+  padding: 7px 13px;
+}

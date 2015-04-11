@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <title>Socket.IO Chat Example</title>
   <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width">
+  <script src="lib/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="lib/raphael.2.1.0.min.js"></script>
+  <script type="text/javascript" src="justgage.js"></script>
 </head>
 <body>
   <ul class="pages">
@@ -11,8 +16,17 @@
       <div class="chatArea">
         <input id="vote-yes" type="button" class="button" value="vote yes"/>
         <input id="vote-no" type="button" class="button" value="vote no"/>
-        <div id="no_display" class="count">0</div>
-        <div id="yes_display" class="count">0</div>
+        <div class="yes count">0</div>
+        <div class="no count">0</div>
+		
+		  <div id="cont" class="container">
+		  <div id="gauge1" class="gauge"></div>
+		  <div id="gauge2" class="gauge" data-title="#2" data-value="75" data-counter="true"></div>
+		  </div>
+		  <div class="container">
+			<button type="button" id="g1_refresh">Refresh G1</button>
+			<button type="button" id="g2_refresh">Refresh G2</button>
+		  </div>
 
         <ul class="messages"></ul>
       </div>
@@ -28,5 +42,6 @@
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/main.js"></script>
+  <script src="/fill_gage.js"></script>
 </body>
 </html>
