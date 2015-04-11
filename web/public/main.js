@@ -11,17 +11,29 @@ $(function() {
   var $window = $(window);
   var $usernameInput = $('.usernameInput'); // Input for username
   var $messages = $('.messages'); // Messages area
-  var $inputMessage = $('.inputMessage'); // Input message input box
 
   var $loginPage = $('.login.page'); // The login page
   var $chatPage = $('.chat.page'); // The chatroom page
+
+  $('#vote-yes').on('click', function() {
+    vote(true);
+  })
+
+  $('#vote-no').on('click', function() {
+    vote(false);
+  })
+
+  var $yes_display = $('#no_display');
+  console.log($yes_display);
+  var $no_display = $('#yes_display');
 
   // Prompt for setting a username
   var username;
   var connected = false;
   var typing = false;
   var lastTypingTime;
-  var $currentInput = $usernameInput.focus();
+  var yes_count = 0;
+  var no_count = 0;
 
   var socket = io();
 
@@ -44,11 +56,22 @@ $(function() {
       $loginPage.fadeOut();
       $chatPage.show();
       $loginPage.off('click');
-      $currentInput = $inputMessage.focus();
 
       // Tell the server your username
       socket.emit('add user', username);
     }
+  }
+
+  function vote(val) {
+    if (val) {
+      yes_count++;
+      $yes_display.text(yes_count);
+    } else {
+      no_count++;
+      $no_display.text(no_count);
+    }
+
+    socket.emit('vote', val);
   }
 
   // Sends a chat message
@@ -193,7 +216,6 @@ $(function() {
   $window.keydown(function (event) {
     // Auto-focus the current input when a key is typed
     if (!(event.ctrlKey || event.metaKey || event.altKey)) {
-      $currentInput.focus();
     }
     // When the client hits ENTER on their keyboard
     if (event.which === 13) {
@@ -207,21 +229,13 @@ $(function() {
     }
   });
 
-  $inputMessage.on('input', function() {
-    updateTyping();
-  });
-
   // Click events
 
   // Focus input when clicking anywhere on login page
   $loginPage.click(function () {
-    $currentInput.focus();
+    $usernameInput.focus();
   });
 
-  // Focus input when clicking on the message input's border
-  $inputMessage.click(function () {
-    $inputMessage.focus();
-  });
 
   // Socket events
 
@@ -249,6 +263,7 @@ $(function() {
 
   // Whenever the server emits 'user left', log it in the chat body
   socket.on('user left', function (data) {
+    console.log(data);
     log(data.username + ' left');
     addParticipantsMessage(data);
     removeChatTyping(data);
@@ -262,5 +277,13 @@ $(function() {
   // Whenever the server emits 'stop typing', kill the typing message
   socket.on('stop typing', function (data) {
     removeChatTyping(data);
+  });
+
+  socket.on('updated_count', function (counts) {
+    yes_count = counts.yes;
+    no_count = counts.no;
+
+    $yes_display.text(yes_count);
+    $no_display.text(no_count);
   });
 });

@@ -9,6 +9,9 @@ server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
 
+var yes = 0;
+var no = 0;
+
 // Routing
 app.use(express.static(__dirname + '/public'));
 
@@ -18,8 +21,16 @@ app.use(express.static(__dirname + '/public'));
 var usernames = {};
 var numUsers = 0;
 
+function sendCounts(socket) {
+    socket.broadcast.emit('updated_count', {
+      yes: yes,
+      no: no
+    });
+}
+
 io.on('connection', function (socket) {
   var addedUser = false;
+  socket.emit('updated_count', {yes : yes, no : no});
 
   // when the client emits 'new message', this listens and executes
   socket.on('new message', function (data) {
@@ -46,6 +57,15 @@ io.on('connection', function (socket) {
       username: socket.username,
       numUsers: numUsers
     });
+  });
+
+  socket.on('vote', function(val) {
+    if (val) {
+      yes += 1;
+    } else {
+      no += 1;
+    }
+    sendCounts(socket);
   });
 
   // when the client emits 'typing', we broadcast it to others
