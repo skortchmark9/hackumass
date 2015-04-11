@@ -9,6 +9,9 @@ server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
 
+var yes = 0;
+var no = 0;
+
 // Routing
 app.use(express.static(__dirname + '/public'));
 
@@ -45,6 +48,19 @@ io.on('connection', function (socket) {
     socket.broadcast.emit('user joined', {
       username: socket.username,
       numUsers: numUsers
+    });
+  });
+
+  socket.on('vote', function(val) {
+    if (val) {
+      yes += 1;
+    } else {
+      no += 1;
+    }
+    console.log(yes, no);
+    socket.broadcast.emit('updated_count', {
+      yes: yes,
+      no: no
     });
   });
 
