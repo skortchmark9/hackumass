@@ -35,6 +35,11 @@ function startRound() {
   yes = 0;
   no = 0;
   io.sockets.emit('restart', {yes : yes, no : no});
+  setTimeout(endVoting, ROUND_LENGTH);
+}
+
+function endVoting() {
+  io.sockets.emit('end_voting');
 }
 
 io.on('connection', function (socket) {
@@ -50,7 +55,7 @@ io.on('connection', function (socket) {
   var addedUser = false;
   socket.emit('updated_count', {yes : yes, no : no});
 
-  socket.on('start_voting', function() {startRound();});
+  socket.on('start_voting', function() {startRound();})
 
   // when the client emits 'add user', this listens and executes
   socket.on('add user', function (username) {
