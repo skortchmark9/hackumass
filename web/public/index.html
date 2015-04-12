@@ -12,32 +12,40 @@
 <body>
   <ul class="pages">
     <li class="chat page container">
-      <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-          <div id="gauge1" class="gauge"></div>
-        </div>
-        <div class="col-md-4"></div>
-      </div>
-      <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-          <div class="controls">
-            <div id="vote-yes" class="button">
-              <label>Yes</label>
-              <span id="yes_hotkey" class="hotkey">(Y)</span>
-              <span id="yes_display" class="count">0</span>
-            </div>
-            <div id="vote-no" class="button">
-              <label>No</label>
-              <span id="no_hotkey" class="hotkey">(N)</span>
-              <span id="no_display" class="count">0</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3"></div>
-      </div>
-      <div class="row">
+		<section class="info"
+			<div class="row">
+				<div class="col-md-3">
+					<div class="controls">
+						<div id="vote-yes" class="btn btn-success">
+						  <label>Yes</label>
+						  <span id="yes_hotkey" class="hotkey">(Y)</span>
+						  <span id="yes_display" class="count">0</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+				</div>
+				<div class="col-md-3">
+					<div class="controls pull-right">
+						<div id="vote-no" class="btn btn-danger">
+						  <label>No</label>
+						  <span id="no_hotkey" class="hotkey">(N)</span>
+						  <span id="no_display" class="count">0</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4"></div>
+				<div class="col-md-4">
+					<center>
+						<div id="gauge1" class="gauge"></div>
+					</center>
+				</div>
+				<div class="col-md-4"></div>
+		  </div>
+		</section>
+    </li>
 
 <div class="container">
     <!--

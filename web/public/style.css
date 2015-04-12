@@ -94,6 +94,11 @@ ul {
 
 .chat.page {
   display: none;
+  width:1080px;
+  height:675px;
+  background-size: 1080px 675px;
+  background-repeat: no-repeat;
+  background-image: url("lib/res/bg.jpg");  
 }
 
 /* Font */
@@ -227,4 +232,8 @@ a:hover.button {
 
 .display > * {
   margin: 10px;
+}
+
+.info {
+  margin-top: 330px;
 }
