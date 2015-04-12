@@ -126,6 +126,11 @@ ul {
   text-align: right;
 }
 
+.right {
+ padding-right: 5%;
+ padding-top: 2.5%;
+}
+
 /* Input */
 
 .inputMessage {
@@ -203,7 +208,7 @@ button {
   background: teal;
   border: 3px solid white;
   box-shadow: 0 10px 0 0 #d4d4d5;
-  padding: 10px;
+  padding: 0px;
   position: fixed;
   bottom: 25%;
 }

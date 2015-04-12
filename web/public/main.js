@@ -20,7 +20,6 @@ $(function() {
   var $yes_hotkey_display = $('#yes_hotkey');
   var yes_hotkey = 89;
   $yes_button.on('click', function() {
-    this.toggleClass('activated', true);
     vote(true);
   });
   var voting = false;
