@@ -331,7 +331,7 @@ $(function() {
     setTimeout(startVoting, 1000);
     $('#voting-modal').modal({
       show : true,
-      keyboard: false,
+      keyboard: true,
     });
   });
 
