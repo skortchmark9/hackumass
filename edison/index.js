@@ -21,7 +21,7 @@ var give_cookie = true;
 board.on("ready", function() {
   var start_interaction = new five.Button(2);
   var hammer = new five.Servo.Continuous(9);
-  var gate = new five.Servo(6);
+  
   var photo_sensor = new five.Sensor({
     pin: "A1",
     threshold: 8
@@ -31,18 +31,23 @@ board.on("ready", function() {
     if (active){
       console.log("making decision...");
       if (give_cookie){
+        hammer.to(180,1000);
         led.on();
       }
       else {
+        hammer.stop();
         led.off();
       }
-      gate.to(10);
       active = false;
     }
   });
 
+  hammer.on("move:complete",function(){
+    console.log("move complete");
+    hammer.stop();
+  });
+
   start_interaction.on("release", function() {
-    gate.to(80);
     console.log("initiating interaction...");
     active = true;
   });

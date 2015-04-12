@@ -27,11 +27,11 @@ board.on("ready", function() {
     if (active){
       console.log("making decision...");
       if (give_cookie){
-	hammer.to(180,1000); //go forward for 1s before emitting move:complete
+        hammer.to(180,1000); //go forward for 1s before emitting move:complete
         led.on();
       }
       else {
-	hammer.stop();
+	      hammer.stop();
         led.off();
       }
       active = false;
