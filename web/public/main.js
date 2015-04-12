@@ -20,8 +20,10 @@ $(function() {
   var $yes_hotkey_display = $('#yes_hotkey');
   var yes_hotkey = 89;
   $yes_button.on('click', function() {
+    this.toggleClass('activated', true);
     vote(true);
   });
+  var voting = false;
 
 
   var $no_button = $('#vote-no');
@@ -37,7 +39,7 @@ $(function() {
   var socket = io();
   var canvas = document.getElementById('canvas-video');
  // socket.onopen = function(evt) {console.log('open!'); console.log(evt);}
-  var player = new jsmpeg(socket, { canvas:canvas }); 
+  var player = new jsmpeg(socket, { canvas:canvas });
 
   // Prompt for setting a username
   var username;
@@ -70,8 +72,6 @@ $(function() {
     }
   }
 
-  setTimeout(changeHotkeys, 5000);
-
   function changeHotkey(yes, hotkey) {
     var key = '(' + String.fromCharCode(hotkey) + ')';
     if (yes) {
@@ -101,6 +101,9 @@ $(function() {
   }
 
   function vote(val) {
+    if (!voting) {
+      return;
+    }
     if (val) {
       updateCount(val, ++yes_count);
     } else {
@@ -256,9 +259,9 @@ $(function() {
   });
 
   $window.keydown(function (event) {
-    if(event.keyCode == yes_hotkey) {
+    if(voting && event.keyCode == yes_hotkey) {
       $yes_button.toggleClass('activated', true);
-    } else if(event.keyCode == no_hotkey) {
+    } else if(voting && event.keyCode == no_hotkey) {
       $no_button.toggleClass('activated', true);
     }
   });
@@ -272,10 +275,6 @@ $(function() {
     $usernameInput.focus();
   });
 
-
-  // Socket events
-  socket.on('video', function(data) {
-  });
   // Whenever the server emits 'login', log the login message
   socket.on('login', function (data) {
     connected = true;
@@ -322,8 +321,18 @@ $(function() {
   });
 
   socket.on('restart', function (counts) {
+    console.log('restart');
+    voting = true;
     updateCount(true, counts.yes);
     updateCount(false, counts.no);
   });
 
+  socket.on('end_voting', function() {
+    console.log('end_voting');
+    voting = false;
+  });
+
+  updateGauge(yes_count, no_count);
+
 });
+
