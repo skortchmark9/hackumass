@@ -14,10 +14,16 @@
   <ul class="pages">
     <li class="chat page">
       <div class="chatArea">
-        <input id="vote-yes" type="button" class="button" value="vote yes"/>
-        <input id="vote-no" type="button" class="button" value="vote no"/>
-        <div id="no_display" class="count">0</div>
-        <div id="yes_display" class="count">0</div>
+        <div class="display">
+          <input id="vote-yes" type="button" class="button" value="vote yes"/>
+          <span id="yes_hotkey" class="hotkey">Y</span>
+          <div id="yes_display" class="count">0</div>
+        </div>
+        <div class="display">
+          <input id="vote-no" type="button" class="button" value="vote no"/>
+          <span id="no_hotkey" class="hotkey">N</span>
+          <div id="no_display" class="count">0</div>
+        </div>
 
 		  <div id="cont" class="container">
 		    <div id="gauge1" class="gauge"></div>

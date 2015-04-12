@@ -15,27 +15,32 @@ $(function() {
   var $loginPage = $('.login.page'); // The login page
   var $chatPage = $('.chat.page'); // The chatroom page
 
+  var $yes_display = $('#yes_display');
+  var $yes_hotkey_display = $('#yes_hotkey');
+  var yes_hotkey = 89;
   $('#vote-yes').on('click', function() {
     vote(true);
-  })
+  });
 
+  var no_hotkey = 78;
+  var $no_hotkey_display = $('#no_hotkey');
+  var $no_display = $('#no_display');
   $('#vote-no').on('click', function() {
     vote(false);
-  })
+  });
 
-  var $yes_display = $('#no_display');
-  console.log($yes_display);
-  var $no_display = $('#yes_display');
+  var yes_count = 0;
+  var no_count = 0;
+  var socket = io();
+
+
+
 
   // Prompt for setting a username
   var username;
   var connected = false;
   var typing = false;
   var lastTypingTime;
-  var yes_count = 0;
-  var no_count = 0;
-
-  var socket = io();
 
   function addParticipantsMessage (data) {
     var message = '';
@@ -60,6 +65,23 @@ $(function() {
       // Tell the server your username
       socket.emit('add user', username);
     }
+  }
+
+  setTimeout(changeHotkeys, 5000);
+  function changeHotkeys() {
+    //65 - 90 = [A - Z]
+    yes_hotkey = Math.floor((Math.random() * 25) + 65);
+    no_hotkey = yes_hotkey;
+    while (yes_hotkey === no_hotkey) {
+      no_hotkey = Math.floor((Math.random() * 25) + 65);
+    }
+
+    var yes = String.fromCharCode(yes_hotkey) // or e.keyCode
+    var no = String.fromCharCode(no_hotkey) // or e.keyCode
+    $yes_hotkey_display.text(yes);
+    $no_hotkey_display.text(no);
+
+    setTimeout(changeHotkeys, Math.random() * 5 * 1000);
   }
 
   function vote(val) {
@@ -224,19 +246,22 @@ $(function() {
 
   $window.keydown(function (event) {
     // Auto-focus the current input when a key is typed
-    if (!(event.ctrlKey || event.metaKey || event.altKey)) {
-    }
     // When the client hits ENTER on their keyboard
     if (event.which === 13) {
-      if (username) {
-        sendMessage();
-        socket.emit('stop typing');
-        typing = false;
-      } else {
+      if (!username) {
         setUsername();
+        return;
       }
     }
+    console.log(event.keyCode);
+    if(event.keyCode == yes_hotkey) {
+      vote(true);
+    } else if(event.keyCode == no_hotkey) {
+      vote(false);
+    }
   });
+
+
 
   // Click events
 
