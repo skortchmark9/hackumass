@@ -184,6 +184,10 @@ button {
   border: 3px solid white;
 }
 
+.timebar {
+  color: white;
+}
+
 .center_content {
   display: inline-flex;
   justify-content: space-between;
