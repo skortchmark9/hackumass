@@ -23,6 +23,5 @@ board.on("ready", function() {
   touch.on("release", function() {
     servo.to(90);
     console.log("Released!");
-    delete servo;
   });
 });
