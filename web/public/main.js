@@ -64,14 +64,23 @@ $(function() {
 
   function vote(val) {
     if (val) {
-      yes_count++;
-      $yes_display.text(yes_count);
+      updateCount(val, ++yes_count);
     } else {
-      no_count++;
-      $no_display.text(no_count);
+      updateCount(val, ++no_count);
     }
 
     socket.emit('vote', val);
+  }
+
+  function updateCount(yes, count) {
+    if (yes) {
+      yes_count = count;
+      $yes_display.text(yes_count);
+    } else  {
+      no_count = count;
+      $no_display.text(no_count);
+    }
+    updateGauge(yes_count, no_count);
   }
 
   // Sends a chat message
@@ -280,10 +289,7 @@ $(function() {
   });
 
   socket.on('updated_count', function (counts) {
-    yes_count = counts.yes;
-    no_count = counts.no;
-
-    $yes_display.text(yes_count);
-    $no_display.text(no_count);
+    updateCount(true, counts.yes);
+    updateCount(false, counts.no);
   });
 });
