@@ -51,7 +51,8 @@ var jsmpeg = window.jsmpeg = function( url, opts ) {
 	if( url instanceof WebSocket || true ) {
 		console.log('noooooo');
 		this.client = url;
-		this.client.onopen = this.initSocketClient.bind(this);
+		this.client.on('connect', this.initSocketClient.bind(this, this.client))
+//		this.client.onopen = this.initSocketClient.bind(this);
 	} 
 	else {
 		this.load(url);
@@ -68,6 +69,7 @@ jsmpeg.prototype.socketBufferSize = 512 * 1024; // 512kb each
 jsmpeg.prototype.onlostconnection = null;
 
 jsmpeg.prototype.initSocketClient = function( client ) {
+	console.log('init client');
 	this.buffer = new BitReader(new ArrayBuffer(this.socketBufferSize));
 
 	this.nextPictureBuffer = new BitReader(new ArrayBuffer(this.socketBufferSize));
@@ -76,7 +78,7 @@ jsmpeg.prototype.initSocketClient = function( client ) {
 	this.nextPictureBuffer.lastWriteBeforeWrap = 0;
 
 	this.client.binaryType = 'arraybuffer';
-	this.client.onmessage = this.receiveSocketMessage.bind(this);
+	this.client.on('video', this.receiveSocketMessage.bind(this));
 };
 
 jsmpeg.prototype.decodeSocketHeader = function( data ) {
@@ -96,9 +98,7 @@ jsmpeg.prototype.decodeSocketHeader = function( data ) {
 };
 
 jsmpeg.prototype.receiveSocketMessage = function( event ) {
-	console.log(event);
-	var messageData = new Uint8Array(event.data);
-
+	var messageData = new Uint8Array(event);
 	if( !this.sequenceStarted ) {
 		this.decodeSocketHeader(messageData);
 	}
