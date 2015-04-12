@@ -23,6 +23,7 @@ $(function() {
     this.toggleClass('activated', true);
     vote(true);
   });
+  var voting = false;
 
 
   var $no_button = $('#vote-no');
@@ -54,6 +55,21 @@ $(function() {
       message += "there are " + data.numUsers + " participants";
     }
     log(message);
+  }
+
+  // Sets the client's username
+  function setUsername () {
+    username = cleanInput($usernameInput.val().trim());
+
+    // If the username is valid
+    if (username) {
+      $loginPage.fadeOut();
+      $chatPage.show();
+      $loginPage.off('click');
+
+      // Tell the server your username
+      socket.emit('add user', username);
+    }
   }
 
   function changeHotkey(yes, hotkey) {
@@ -230,10 +246,10 @@ $(function() {
       }
     }
 
-    if(event.keyCode == yes_hotkey) {
+    if(event.keyCode == yes_hotkey && voting) {
       vote(true);
       $yes_button.toggleClass('activated', false);
-    } else if(event.keyCode == no_hotkey) {
+    } else if(event.keyCode == no_hotkey && voting) {
       $no_button.toggleClass('activated', false);
       vote(false);
     }
@@ -306,8 +322,13 @@ $(function() {
   });
 
   socket.on('restart', function (counts) {
+    voting = true;
     updateCount(true, counts.yes);
     updateCount(false, counts.no);
   });
+
+  socket.on('end_voting', function() {
+    voting = false;
+  }
 
 });
