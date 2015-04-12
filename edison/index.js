@@ -8,6 +8,10 @@ var Edison = require("edison-io");
 var board = new five.Board({
   io: new Edison()
 });
+var led = new five.Led(3);
+
+var socket = require( 'socket.io-client' )('http://52.10.1.31:3000');
+//var client = ioc.connect( "http://52.10.1.31",{port: 3000, reconnect: true});
 
 board.on("ready", function() {
   var touch = new five.Button(2);
@@ -23,6 +27,17 @@ board.on("ready", function() {
   touch.on("release", function() {
     servo.to(90);
     console.log("Released!");
-    delete servo;
   });
 });
+
+socket.on('connect', function () {
+  console.log("callback...");
+  socket.on('updated_count', function(data){
+    if (data.yes > data.no) {
+      led.on();
+    } else {
+      led.off();
+    }
+  })
+});
+
