@@ -5,6 +5,7 @@
 // This code will work for BOTH the capactive button and the "standard" button with a black tip
 var five = require("johnny-five");
 var Edison = require("edison-io");
+var fs = require('fs');
 var socket = require( 'socket.io-client' )('http://52.10.1.31:3000');
 var http = require('http');
 var childProcess = require('child_process');
@@ -21,7 +22,7 @@ var give_cookie = true;
 board.on("ready", function() {
   var start_interaction = new five.Button(2);
   var hammer = new five.Servo.Continuous(9);
-  
+
   var photo_sensor = new five.Sensor({
     pin: "A1",
     threshold: 8
@@ -75,9 +76,12 @@ socket.on('connect', function () {
 // configuration files
 var streamPort = 8082;
 http.createServer(function (req, res) {
-  req.on('data', function (data) {
-    socket.send(data, {binary : true});
-  });
+  var stream = fs.createReadStream(req);
+  stream.pipe(socket);
+
+  // req.on('data', function (data) {
+  //   socket.send(data, {binary : true});
+  // });
 }).listen(streamPort, function() {
   childProcess.exec('bin/do_ffmpeg.sh');
 });
