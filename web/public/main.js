@@ -320,10 +320,10 @@ $(function() {
   });
 
   function startVoting() {
-    voting = true;
-    updateCount(true, counts.yes);
-    updateCount(false, counts.no);
     $('#voting-modal').modal('hide');
+    voting = true;
+    updateCount(true, 0);
+    updateCount(false, 0);
   }
 
   socket.on('restart', function (counts) {
