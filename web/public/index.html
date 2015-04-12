@@ -1,39 +1,46 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"charset="UTF-8">
   <title>Galletine</title>
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="style.css">
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width">
   <script src="lib/jquery-1.7.2.min.js"></script>
   <script type="text/javascript" src="lib/raphael.2.1.0.min.js"></script>
   <script type="text/javascript" src="justgage.js"></script>
 </head>
 <body>
   <ul class="pages">
-    <li class="chat page">
-      <div class="chatArea">
-        <div class="display">
-          <input id="vote-yes" type="button" class="button" value="vote yes"/>
-          <span id="yes_hotkey" class="hotkey">Y</span>
-          <div id="yes_display" class="count">0</div>
+    <li class="chat page container">
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <div id="gauge1" class="gauge"></div>
         </div>
-        <div class="display">
-          <input id="vote-no" type="button" class="button" value="vote no"/>
-          <span id="no_hotkey" class="hotkey">N</span>
-          <div id="no_display" class="count">0</div>
+        <div class="col-md-4"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <div class="controls">
+            <div id="vote-yes" class="button">
+              <label>Yes</label>
+              <span id="yes_hotkey" class="hotkey">(Y)</span>
+              <span id="yes_display" class="count">0</span>
+            </div>
+            <div id="vote-no" class="button">
+              <label>No</label>
+              <span id="no_hotkey" class="hotkey">(N)</span>
+              <span id="no_display" class="count">0</span>
+            </div>
+          </div>
         </div>
-
-		  <div id="cont" class="container">
-		    <div id="gauge1" class="gauge"></div>
-		  </div>
-        <ul class="messages"></ul>
+        <div class="col-md-3"></div>
       </div>
     </li>
     <li class="login page">
       <div class="form">
-        <h3 class="title">What's your nickname?</h3>
+        <h3 id="nickname" class="title">What's your nickname?</h3>
         <input class="usernameInput" type="text" maxlength="14" />
       </div>
     </li>

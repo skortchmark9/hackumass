@@ -15,17 +15,20 @@ $(function() {
   var $loginPage = $('.login.page'); // The login page
   var $chatPage = $('.chat.page'); // The chatroom page
 
+  var $yes_button = $('#vote-yes');
   var $yes_display = $('#yes_display');
   var $yes_hotkey_display = $('#yes_hotkey');
   var yes_hotkey = 89;
-  $('#vote-yes').on('click', function() {
+  $yes_button.on('click', function() {
     vote(true);
   });
 
-  var no_hotkey = 78;
+
+  var $no_button = $('#vote-no');
   var $no_hotkey_display = $('#no_hotkey');
   var $no_display = $('#no_display');
-  $('#vote-no').on('click', function() {
+  var no_hotkey = 78;
+  $no_button.on('click', function() {
     vote(false);
   });
 
@@ -65,14 +68,17 @@ $(function() {
   }
 
   setTimeout(changeHotkeys, 5000);
+
   function changeHotkey(yes, hotkey) {
-    var key = String.fromCharCode(hotkey);
+    var key = '(' + String.fromCharCode(hotkey) + ')';
     if (yes) {
       yes_hotkey = hotkey;
       $yes_hotkey_display.text(key);
+      $yes_button.toggleClass('activated', false);
     } else {
       no_hotkey = hotkey;
       $no_hotkey_display.text(key);
+      $no_button.toggleClass('activated', false);
     }
   }
 
@@ -135,30 +141,6 @@ $(function() {
     addMessageElement($el, options);
   }
 
-  // Adds the visual chat message to the message list
-  function addChatMessage (data, options) {
-    // Don't fade the message in if there is an 'X was typing'
-    var $typingMessages = getTypingMessages(data);
-    options = options || {};
-    if ($typingMessages.length !== 0) {
-      options.fade = false;
-      $typingMessages.remove();
-    }
-
-    var $usernameDiv = $('<span class="username"/>')
-      .text(data.username)
-      .css('color', getUsernameColor(data.username));
-    var $messageBodyDiv = $('<span class="messageBody">')
-      .text(data.message);
-
-    var typingClass = data.typing ? 'typing' : '';
-    var $messageDiv = $('<li class="message"/>')
-      .data('username', data.username)
-      .addClass(typingClass)
-      .append($usernameDiv, $messageBodyDiv);
-
-    addMessageElement($messageDiv, options);
-  }
 
   // Adds the visual chat typing message
   function addChatTyping (data) {
@@ -263,8 +245,18 @@ $(function() {
 
     if(event.keyCode == yes_hotkey) {
       vote(true);
+      $yes_button.toggleClass('activated', false);
     } else if(event.keyCode == no_hotkey) {
+      $no_button.toggleClass('activated', false);
       vote(false);
+    }
+  });
+
+  $window.keydown(function (event) {
+    if(event.keyCode == yes_hotkey) {
+      $yes_button.toggleClass('activated', true);
+    } else if(event.keyCode == no_hotkey) {
+      $no_button.toggleClass('activated', true);
     }
   });
 
