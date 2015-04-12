@@ -5,7 +5,7 @@
 // This code will work for BOTH the capactive button and the "standard" button with a black tip
 var five = require("johnny-five");
 var Edison = require("edison-io");
-var socket = require( 'socket.io-client' )('http://52.10.1.31:3000');
+var socket = require( 'socket.io-client' )('http://52.10.1.31:3000', {reconnection : true});
 var http = require('http');
 var childProcess = require('child_process');
 
@@ -22,20 +22,6 @@ board.on("ready", function() {
   var start_interaction = new five.Button(2);
   var hammer = new five.Servo.Continuous(9);
   var led_signal = new five.Pin(4);
-
-  socket.on("end_voting", function(){
-    console.log("making decision...");
-    if (give_cookie){
-      led_signal.high();
-      led.on();
-      setTimeout(function (){hammer.to(180,1000)},1000);
-    }
-    else {
-      hammer.stop();
-      led.off();
-    }
-    active = false;
-  });
 
   hammer.on("move:complete",function(){
     console.log("done!");
@@ -66,6 +52,21 @@ socket.on('connect', function () {
   socket.on('updated_count', function(data){
     var give_cookie = data.yes > data.no;
   });
+
+  socket.on("end_voting", function(){
+    console.log("making decision...");
+    if (give_cookie){
+      led_signal.high();
+      led.on();
+      setTimeout(function (){hammer.to(180,1000)},1000);
+    }
+    else {
+      hammer.stop();
+      led.off();
+    }
+    active = false;
+  });
+
 
   /* Video Stuff! */
   var streamHeader = new Buffer(8);

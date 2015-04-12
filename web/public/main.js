@@ -35,7 +35,13 @@ $(function() {
 
   var yes_count = 0;
   var no_count = 0;
-  var socket = io();
+  var socket = io('http://52.10.1.31:3000/', {reconnection: true});
+  socket.on('disconnect', function (data) {
+  	console.log(data);
+  });
+  socket.on('error', function (data) {
+	console.log('error');  
+});
   var canvas = document.getElementById('canvas-video');
  // socket.onopen = function(evt) {console.log('open!'); console.log(evt);}
   var player = new jsmpeg(socket, { canvas:canvas });
@@ -274,6 +280,9 @@ $(function() {
     $usernameInput.focus();
   });
 
+  socket.on('connect', function() {
+	console.log('connected');  
+  });
   // Whenever the server emits 'login', log the login message
   socket.on('login', function (data) {
     connected = true;

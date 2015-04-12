@@ -34,11 +34,13 @@ function sendCounts(socket) {
 function startRound() {
   yes = 0;
   no = 0;
+  console.log('restarting');
   io.sockets.emit('restart', {yes : yes, no : no});
   setTimeout(endVoting, ROUND_LENGTH);
 }
 
 function endVoting() {
+  console.log('voting ended');
   io.sockets.emit('end_voting');
 }
 
@@ -76,6 +78,7 @@ io.on('connection', function (socket) {
   });
 
   socket.on('vote', function(val) {
+    console.log('voting received');
     if (val) {
       yes += 1;
     } else {
@@ -85,7 +88,7 @@ io.on('connection', function (socket) {
   });
 
   socket.on('message', function(data, options) {
-	io.sockets.emit('video', data, options);
+	socket.broadcast.emit('video', data, options);
   });
 
   // when the client emits 'typing', we broadcast it to others
@@ -97,6 +100,7 @@ io.on('connection', function (socket) {
 
   // when the user disconnects.. perform this
   socket.on('disconnect', function () {
+    console.log('disconnected');
     // remove the username from global usernames list
     if (addedUser) {
       delete usernames[socket.username];
