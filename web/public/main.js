@@ -20,6 +20,7 @@ $(function() {
   var $yes_hotkey_display = $('#yes_hotkey');
   var yes_hotkey = 89;
   $yes_button.on('click', function() {
+    this.toggleClass('activated', true);
     vote(true);
   });
 
@@ -37,7 +38,7 @@ $(function() {
   var socket = io();
   var canvas = document.getElementById('canvas-video');
  // socket.onopen = function(evt) {console.log('open!'); console.log(evt);}
-  var player = new jsmpeg(socket, { canvas:canvas }); 
+  var player = new jsmpeg(socket, { canvas:canvas });
 
   // Prompt for setting a username
   var username;
@@ -69,8 +70,6 @@ $(function() {
       socket.emit('add user', username);
     }
   }
-
-  setTimeout(changeHotkeys, 5000);
 
   function changeHotkey(yes, hotkey) {
     var key = '(' + String.fromCharCode(hotkey) + ')';

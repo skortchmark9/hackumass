@@ -136,9 +136,8 @@ button {
 }
 
 .gauge {
-  width: 400px;
-  height: 300px;
   display: inline-block;
+  height: 200px;
 }
 
 .button {
@@ -173,6 +172,13 @@ button {
 #vote-no.activated {
   border: 3px solid white;
 }
+#vote-no:active{
+  border: 3px solid white;
+}
+
+#vote-yes:active {
+  border: 3px solid white;
+}
 
 #vote-yes.activated {
   border: 3px solid white;
@@ -186,7 +192,7 @@ button {
   box-shadow: 0 10px 0 0 #d4d4d5;
   padding: 10px;
   position: fixed;
-  bottom: 50%;
+  bottom: 25%;
 }
 
 .right {
@@ -200,7 +206,6 @@ button {
 
 .btn {
   max-height: 100px;
-  margin: 10px;
 }
 .btn:active{
   border: 3px solid green;
