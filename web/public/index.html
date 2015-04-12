@@ -9,10 +9,8 @@
   <script type="text/javascript" src="lib/raphael.2.1.0.min.js"></script>
   <script type="text/javascript" src="justgage.js"></script>
 </head>
-<body>
-  <ul class="pages">
-    <li class="chat page container">
-		<section class="info"
+<body class="page">
+		<section class="info">
 			<div class="row">
 				<div class="col-md-3">
 					<div class="controls">
@@ -23,8 +21,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-6">
-				</div>
+				<div class="col-md-6"></div>
 				<div class="col-md-3">
 					<div class="controls pull-right">
 						<div id="vote-no" class="btn btn-danger">
@@ -45,28 +42,15 @@
 				<div class="col-md-4"></div>
 		  </div>
 		</section>
-    </li>
-
-<div class="container">
+    <div class="container">
     <!--
       The canvas size specified here is the "initial" internal resolution. jsmpeg will
       change this internal resolution to whatever the source provides. The size the
       canvas is displayed on the website is dictated by the CSS style.
     -->
-    <canvas id="canvas-video" width="640" height="480"></canvas>
-  </div>
-
+      <canvas id="canvas-video" width="640" height="480"></canvas>
+    </div>
   <script src="/jsmpg.js"></script>
-</div>
-    </li>
-    <li class="login page">
-      <div class="form">
-        <h3 id="nickname" class="title">What's your nickname?</h3>
-        <input class="usernameInput" type="text" maxlength="14" />
-      </div>
-    </li>
-  </ul>
-
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/fill_gage.js"></script>

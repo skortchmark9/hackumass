@@ -48,7 +48,7 @@ io.on('connection', function (socket) {
   streamHeader.writeUInt16BE(width, 4);
   streamHeader.writeUInt16BE(height, 6);
   socket.emit('video', streamHeader, { binary: true });
-  
+
 
   var addedUser = false;
   socket.emit('updated_count', {yes : yes, no : no});
