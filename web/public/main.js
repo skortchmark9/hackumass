@@ -323,14 +323,12 @@ $(function() {
     voting = true;
     updateCount(true, counts.yes);
     updateCount(false, counts.no);
-    $('#voting-modal').modal({
-      show : false,
-    });
+    $('#voting-modal').modal('hide');
   }
 
   socket.on('restart', function (counts) {
     console.log('restart');
-    setTimeout(startVoting, 2000);
+    setTimeout(startVoting, 1000);
     $('#voting-modal').modal({
       show : true,
       keyboard: false,
