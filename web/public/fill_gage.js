@@ -5,7 +5,7 @@ var gauge1 = new JustGage({
 	min: 0,
 	max: 1,
 	humanFriendly: false,
-	decimals: 1,
+	decimals: 2,
 	counter: false,
   gaugeColor: '#ff0000',
   levelColors: ['#00ff00']
