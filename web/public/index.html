@@ -5,11 +5,19 @@
   <title>CookieMonster.me</title>
   <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="style.css">
-  <script src="lib/jquery-1.7.2.min.js"></script>
+  <script src="lib/jquery-1.11.2.min.js"></script>
   <script type="text/javascript" src="lib/raphael.2.1.0.min.js"></script>
   <script type="text/javascript" src="justgage.js"></script>
 </head>
 <body class="page">
+  <div id='voting-modal' class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        Voting starts in 3...2....1
+      </div>
+    </div>
+  </div>
+
 		<section class="info">
 			<div class="row">
 				<div class="col-md-3"></div>
@@ -48,7 +56,7 @@
       canvas is displayed on the website is dictated by the CSS style.
     -->
   <script src="/jsmpg.js"></script>
-  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
 
   <script src="/fill_gage.js"></script>

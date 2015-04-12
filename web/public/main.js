@@ -320,11 +320,22 @@ $(function() {
     updateCount(false, counts.no);
   });
 
-  socket.on('restart', function (counts) {
-    console.log('restart');
+  function startVoting() {
     voting = true;
     updateCount(true, counts.yes);
     updateCount(false, counts.no);
+    $('#voting-modal').modal({
+      show : false,
+    });
+  }
+
+  socket.on('restart', function (counts) {
+    console.log('restart');
+    setTimeout(startVoting, 2000);
+    $('#voting-modal').modal({
+      show : true,
+      keyboard: false,
+    });
   });
 
   socket.on('end_voting', function() {
