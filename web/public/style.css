@@ -158,16 +158,42 @@ button {
   line-height: 1.8em;
 }
 
-.btn.activated {
-  border: 3px solid green;
+.btn {
+  transition: box-shadow .2s cubic-bezier(.55,0,.1,1), color .2s cubic-bezier(.55,0,.1,1);
 }
 
-.btn:active{
-  border: 3px solid green;
+#vote-yes {
+  border: 3px solid #5cb85c;
+}
+
+#vote-no {
+  border: 3px solid #d43f3a;
+}
+
+#vote-no.activated {
+  border: 3px solid white;
+}
+
+#vote-yes.activated {
+  border: 3px solid white;
+}
+
+.center_content {
+  display: inline-flex;
+  justify-content: space-between;
+  background: teal;
+  border: 3px solid white;
+  box-shadow: 0 10px 0 0 #d4d4d5;
+  padding: 10px;
+  position: relative:
 }
 
 .btn {
-  border: 3px transparent;
+  max-height: 100px;
+  margin: 10px;
+}
+.btn:active{
+  border: 3px solid green;
 }
 
 .hotkey {

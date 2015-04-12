@@ -12,44 +12,42 @@
 <body class="page">
 		<section class="info">
 			<div class="row">
-				<div class="col-md-3">
-					<div class="controls">
-						<div id="vote-yes" class="btn btn-success">
-						  <label>Yes</label>
-						  <span id="yes_hotkey" class="hotkey">(Y)</span>
-						  <span id="yes_display" class="count">0</span>
-						</div>
-					</div>
-				</div>
+				<div class="col-md-3"></div>
 				<div class="col-md-6"></div>
-				<div class="col-md-3">
-					<div class="controls pull-right">
-						<div id="vote-no" class="btn btn-danger">
-						  <label>No</label>
-						  <span id="no_hotkey" class="hotkey">(N)</span>
-						  <span id="no_display" class="count">0</span>
-						</div>
-					</div>
-				</div>
+				<div class="col-md-3"></div>
 			</div>
 			<div class="row">
-				<div class="col-md-4"></div>
-				<div class="col-md-4">
-					<center>
-						<div id="gauge1" class="gauge"></div>
-					</center>
+				<div class="col-md-2"></div>
+				<div class="col-md-8 center_content">
+          <div>
+  					<center class="gauge container">
+  						<div id="gauge1" class="gauge"></div>
+  					</center>
+          </div>
+          <div class="right">
+            <canvas id="canvas-video" width="640" height="480"></canvas>
+            <div class="controls">
+              <div id="vote-yes" class="btn btn-success">
+                <label>Cookie</label>
+                <span id="yes_hotkey" class="hotkey">(Y)</span>
+                <span id="yes_display" class="count">0</span>
+              </div>
+              <div id="vote-no" class="btn btn-danger">
+                <label>No Cookie</label>
+                <span id="no_hotkey" class="hotkey">(N)</span>
+                <span id="no_display" class="count">0</span>
+              </div>
+            </div>
+          </div>
 				</div>
-				<div class="col-md-4"></div>
+				<div class="col-md-2"></div>
 		  </div>
 		</section>
-    <div class="container">
     <!--
       The canvas size specified here is the "initial" internal resolution. jsmpeg will
       change this internal resolution to whatever the source provides. The size the
       canvas is displayed on the website is dictated by the CSS style.
     -->
-      <canvas id="canvas-video" width="640" height="480"></canvas>
-    </div>
   <script src="/jsmpg.js"></script>
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
