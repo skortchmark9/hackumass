@@ -194,6 +194,11 @@ button {
   bottom: 25%;
 }
 
+.right {
+  padding-right: 5%;
+  padding-top: 2.5%;
+}
+
 .row {
   height: 50%;
 }
