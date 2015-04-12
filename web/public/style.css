@@ -185,7 +185,8 @@ button {
   border: 3px solid white;
   box-shadow: 0 10px 0 0 #d4d4d5;
   padding: 10px;
-  position: relative:
+  position: fixed;
+  bottom: 0;
 }
 
 .row {
