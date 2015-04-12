@@ -33,9 +33,6 @@ $(function() {
   var no_count = 0;
   var socket = io();
 
-
-
-
   // Prompt for setting a username
   var username;
   var connected = false;
@@ -68,18 +65,28 @@ $(function() {
   }
 
   setTimeout(changeHotkeys, 5000);
+  function changeHotkey(yes, hotkey) {
+    var key = String.fromCharCode(hotkey);
+    if (yes) {
+      yes_hotkey = hotkey;
+      $yes_hotkey_display.text(key);
+    } else {
+      no_hotkey = hotkey;
+      $no_hotkey_display.text(key);
+    }
+  }
+
   function changeHotkeys() {
     //65 - 90 = [A - Z]
     yes_hotkey = Math.floor((Math.random() * 25) + 65);
     no_hotkey = yes_hotkey;
+
     while (yes_hotkey === no_hotkey) {
       no_hotkey = Math.floor((Math.random() * 25) + 65);
     }
 
-    var yes = String.fromCharCode(yes_hotkey) // or e.keyCode
-    var no = String.fromCharCode(no_hotkey) // or e.keyCode
-    $yes_hotkey_display.text(yes);
-    $no_hotkey_display.text(no);
+    changeHotkey(true, yes_hotkey);
+    changeHotkey(false, no_hotkey);
 
     setTimeout(changeHotkeys, Math.random() * 5 * 1000);
   }
@@ -253,7 +260,7 @@ $(function() {
         return;
       }
     }
-    console.log(event.keyCode);
+
     if(event.keyCode == yes_hotkey) {
       vote(true);
     } else if(event.keyCode == no_hotkey) {
@@ -317,4 +324,10 @@ $(function() {
     updateCount(true, counts.yes);
     updateCount(false, counts.no);
   });
+
+  socket.on('restart', function (counts) {
+    updateCount(true, counts.yes);
+    updateCount(false, counts.no);
+  });
+
 });

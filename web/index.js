@@ -31,7 +31,7 @@ function startRound() {
   console.log('starting round');
   yes = 0;
   no = 0;
-  io.sockets.emit('updated_count', {yes : yes, no : no});
+  io.sockets.emit('restart', {yes : yes, no : no});
   setTimeout(startRound, ROUND_LENGTH);
 }
 startRound();
