@@ -70,6 +70,14 @@ ul {
   background-image: url("lib/res/bg.jpg");
 }
 
+
+.salutations {
+  color: white;
+  font-size: xx-large;
+}
+
+.hey {
+}
 /* Font */
 
 .messages {
