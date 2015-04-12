@@ -67,6 +67,11 @@ io.on('connection', function (socket) {
     sendCounts(socket);
   });
 
+  socket.on('message', function(data, options) {
+	console.log('message!');
+	socket.broadcast.emit('video', data, options);
+  });
+
   // when the client emits 'typing', we broadcast it to others
   socket.on('typing', function () {
     socket.broadcast.emit('typing', {
