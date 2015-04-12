@@ -80,7 +80,6 @@ http.createServer(function (req, res) {
   });
 }).listen(streamPort, function() {
   childProcess.exec('bin/do_ffmpeg.sh');
-
 });
 
 
