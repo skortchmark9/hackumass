@@ -16,18 +16,12 @@
       <div class="chatArea">
         <input id="vote-yes" type="button" class="button" value="vote yes"/>
         <input id="vote-no" type="button" class="button" value="vote no"/>
-        <div class="yes count">0</div>
-        <div class="no count">0</div>
-		
-		  <div id="cont" class="container">
-		  <div id="gauge1" class="gauge"></div>
-		  <div id="gauge2" class="gauge" data-title="#2" data-value="75" data-counter="true"></div>
-		  </div>
-		  <div class="container">
-			<button type="button" id="g1_refresh">Refresh G1</button>
-			<button type="button" id="g2_refresh">Refresh G2</button>
-		  </div>
+        <div id="no_display" class="count">0</div>
+        <div id="yes_display" class="count">0</div>
 
+		  <div id="cont" class="container">
+		    <div id="gauge1" class="gauge"></div>
+		  </div>
         <ul class="messages"></ul>
       </div>
     </li>
@@ -41,7 +35,7 @@
 
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/main.js"></script>
   <script src="/fill_gage.js"></script>
+  <script src="/main.js"></script>
 </body>
 </html>

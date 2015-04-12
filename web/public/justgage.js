@@ -729,7 +729,8 @@
       obj.config.donut
     ]
   }, obj.config.startAnimationTime, obj.config.startAnimationType);
-  obj.txtValue.animate({"fill-opacity":(obj.config.hideValue)?"0":"1"}, obj.config.startAnimationTime, obj.config.startAnimationType);
+  // Hide the guage counter
+  //obj.txtValue.animate({"fill-opacity":(obj.config.hideValue)?"0":"1"}, obj.config.startAnimationTime, obj.config.startAnimationType);
   obj.txtLabel.animate({"fill-opacity":"1"}, obj.config.startAnimationTime, obj.config.startAnimationType);
 };
 

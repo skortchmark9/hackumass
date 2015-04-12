@@ -11,11 +11,10 @@ server.listen(port, function () {
 
 var yes = 0;
 var no = 0;
+var ROUND_LENGTH = 10 * 1000;
 
 // Routing
 app.use(express.static(__dirname + '/public'));
-
-// Chatroom
 
 // usernames which are currently connected to the chat
 var usernames = {};
@@ -28,18 +27,18 @@ function sendCounts(socket) {
     });
 }
 
+function startRound() {
+  console.log('starting round');
+  yes = 0;
+  no = 0;
+  io.sockets.emit('updated_count', {yes : yes, no : no});
+  setTimeout(startRound, ROUND_LENGTH);
+}
+startRound();
+
 io.on('connection', function (socket) {
   var addedUser = false;
   socket.emit('updated_count', {yes : yes, no : no});
-
-  // when the client emits 'new message', this listens and executes
-  socket.on('new message', function (data) {
-    // we tell the client to execute 'new message'
-    socket.broadcast.emit('new message', {
-      username: socket.username,
-      message: data
-    });
-  });
 
   // when the client emits 'add user', this listens and executes
   socket.on('add user', function (username) {
@@ -71,13 +70,6 @@ io.on('connection', function (socket) {
   // when the client emits 'typing', we broadcast it to others
   socket.on('typing', function () {
     socket.broadcast.emit('typing', {
-      username: socket.username
-    });
-  });
-
-  // when the client emits 'stop typing', we broadcast it to others
-  socket.on('stop typing', function () {
-    socket.broadcast.emit('stop typing', {
       username: socket.username
     });
   });
