@@ -188,6 +188,10 @@ button {
   position: relative:
 }
 
+.row {
+  height: 50%;
+}
+
 .btn {
   max-height: 100px;
   margin: 10px;
