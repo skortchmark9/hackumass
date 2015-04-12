@@ -11,7 +11,6 @@ var board = new five.Board({
 var led = new five.Led(3);
 
 var socket = require( 'socket.io-client' )('http://52.10.1.31:3000');
-//var client = ioc.connect( "http://52.10.1.31",{port: 3000, reconnect: true});
 
 board.on("ready", function() {
   var touch = new five.Button(2);
