@@ -244,7 +244,7 @@ $(function() {
 
   // Keyboard events
 
-  $window.keydown(function (event) {
+  $window.keyup(function (event) {
     // Auto-focus the current input when a key is typed
     // When the client hits ENTER on their keyboard
     if (event.which === 13) {
