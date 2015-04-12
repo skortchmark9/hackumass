@@ -20,29 +20,31 @@ board.on("ready", function() {
   var gate = new five.Servo(6);
   var photo_sensor = new five.Sensor({
     pin: "A1",
-    threshold: 5
+    threshold: 8
   });
 
   photo_sensor.on("change",function(){
-    console.log("making decision...");
-    if (give_cookie){
-      led.on();
+    if (active){
+      console.log("making decision...");
+      if (give_cookie){
+        led.on();
+      }
+      else {
+        led.off();
+      }
+      gate.to(10);
+      active = false;
     }
-    else {
-      led.off();
-    }
-    active = false;
   });
   
   start_interaction.on("release", function() {
-    gate.to(90);
+    gate.to(80);
     console.log("initiating interaction...");
     active = true;
   });
 });
 
 socket.on('connect', function () {
-  console.log("callback...");
   socket.on('updated_count', function(data){
     give_cookie = data.yes > data.no;
   })
