@@ -12,6 +12,10 @@ server.listen(port, function () {
 var yes = 0;
 var no = 0;
 var ROUND_LENGTH = 10 * 1000;
+var STREAM_MAGIC_BYTES = 'jsmp'; // Must be 4 bytes
+var width = 320;
+var height = 240;
+
 
 // Routing
 app.use(express.static(__dirname + '/public'));
@@ -37,6 +41,15 @@ function startRound() {
 startRound();
 
 io.on('connection', function (socket) {
+    /* Video Stuff! */
+  var streamHeader = new Buffer(8);
+
+  streamHeader.write(STREAM_MAGIC_BYTES);
+  streamHeader.writeUInt16BE(width, 4);
+  streamHeader.writeUInt16BE(height, 6);
+  socket.emit('video', streamHeader, { binary: true });
+  
+
   var addedUser = false;
   socket.emit('updated_count', {yes : yes, no : no});
 
@@ -68,8 +81,7 @@ io.on('connection', function (socket) {
   });
 
   socket.on('message', function(data, options) {
-	console.log('message!');
-	socket.broadcast.emit('video', data, options);
+	io.sockets.emit('video', data, options);
   });
 
   // when the client emits 'typing', we broadcast it to others
