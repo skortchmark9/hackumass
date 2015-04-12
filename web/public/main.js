@@ -101,6 +101,9 @@ $(function() {
   }
 
   function vote(val) {
+    if (!voting) {
+      return;
+    }
     if (val) {
       updateCount(val, ++yes_count);
     } else {
@@ -246,19 +249,19 @@ $(function() {
       }
     }
 
-    if(event.keyCode == yes_hotkey && voting) {
+    if(event.keyCode == yes_hotkey) {
       vote(true);
       $yes_button.toggleClass('activated', false);
-    } else if(event.keyCode == no_hotkey && voting) {
+    } else if(event.keyCode == no_hotkey) {
       $no_button.toggleClass('activated', false);
       vote(false);
     }
   });
 
   $window.keydown(function (event) {
-    if(event.keyCode == yes_hotkey) {
+    if(voting && event.keyCode == yes_hotkey) {
       $yes_button.toggleClass('activated', true);
-    } else if(event.keyCode == no_hotkey) {
+    } else if(voting && event.keyCode == no_hotkey) {
       $no_button.toggleClass('activated', true);
     }
   });
@@ -272,10 +275,6 @@ $(function() {
     $usernameInput.focus();
   });
 
-
-  // Socket events
-  socket.on('video', function(data) {
-  });
   // Whenever the server emits 'login', log the login message
   socket.on('login', function (data) {
     connected = true;
@@ -322,13 +321,18 @@ $(function() {
   });
 
   socket.on('restart', function (counts) {
+    console.log('restart');
     voting = true;
     updateCount(true, counts.yes);
     updateCount(false, counts.no);
   });
 
   socket.on('end_voting', function() {
+    console.log('end_voting');
     voting = false;
-  }
+  });
+
+  updateGauge(yes_count, no_count);
 
 });
+
